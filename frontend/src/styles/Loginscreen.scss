@@ -1,0 +1,69 @@
+.login-screen {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #034694;
+    height: 100vh;
+
+    &__container {
+        display: flex;
+        flex-direction: column;
+        padding: 2rem;
+        border-radius: 1rem;
+        border: none;
+        background-color: white;
+        width: 22%;
+    }
+
+    &__field-container {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 0.6rem;
+    }
+
+    &__heading {
+        text-align: center;
+        padding: 1rem;
+        font-weight: 600;
+        font-size: 1.2rem;
+    }
+
+    &__field-label {
+        font-size: 0.8rem;
+        font-weight: 600;
+        margin-bottom: 0.2rem;
+    }
+
+    &__field-input {
+        padding: 0.5rem;
+        font-weight: 200;
+        border: none;
+        border: 1.5px lightgray;
+        border-style: solid;
+        border-radius: 0.2rem;
+        font-size: 0.75rem;
+    }
+
+    &__checkbox-container {
+        display: flex;
+        align-items: center;
+    }
+
+    &__signup-button {
+        padding: 0.7rem;
+        font-size: 0.8rem;
+        background: #034694;
+        color: white;
+        border: none;
+        border-radius: 0.2rem;
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+        cursor: pointer;
+    }
+
+    &__login-option {
+        text-align: center;
+        font-size: 0.65rem;
+        font-weight: 500;
+    }
+}
