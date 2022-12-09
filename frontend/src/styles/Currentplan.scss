@@ -1,0 +1,92 @@
+.current-plan {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #034694;
+    height: 100vh;
+
+    &__container {
+        display: flex;
+        flex-direction: column;
+        padding: 1rem;
+        border-radius: 1rem;
+        border: none;
+        background-color: white;
+        width: 40%;
+    }
+
+    &__header {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+
+    &__heading {
+        font-size: 1.2rem;
+        font-weight: 500;
+    }
+
+    &__status {
+        color: #034694;
+        font-weight: 500;
+        font-size: 0.8rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #B9D9EB;
+        margin-left: 0.5rem;
+        border-radius: 0.2rem;
+        padding: 0.1rem 0.3rem;
+
+        &--cancelled {
+            background: #ffe6e9;
+            color: #f12e46;
+        }
+    }
+
+    &__cancel-button {
+        color: #034694;
+        font-weight: 500;
+        font-size: 0.8rem;
+        cursor: pointer;
+        margin-left: 15.3rem;
+    }
+
+    &__name {
+        margin-top: 1rem;
+        font-weight: 500;
+        color: gray;
+        font-size: 1rem;
+    }
+
+    &__devices {
+        color: gray;
+        font-size: 0.75rem;
+        font-weight: 500;
+    }
+
+    &__price {
+        padding: 0.6rem 0;
+        font-size: 1.6rem;
+        font-weight: 500;
+    }
+
+    &__change-plan-button {
+        padding: 0.3rem 0.6rem;
+        width: 22%;
+        border: 1.5px solid #034694;
+        color: #034694;
+        border-radius: 0.4rem;
+        background: white;
+        cursor: pointer;
+        font-family: 'Segoe UI';
+        font-weight: 500;
+        margin-bottom: 0.8rem;
+    }
+
+    &__footer {
+        font-size: 0.8rem;
+        background: #F8F8F8;
+        font-weight: 500;
+    }
+}
