@@ -120,7 +120,9 @@ const MonthlyPlans = () => {
                 </table>
             </div>
 
-            <buttton className='plans-screen__next-button'>Next</buttton>
+            <buttton className='plans-screen__next-button' onClick={() => {
+                window.location.href = '/payment';
+            }}>Next</buttton>
         </div >
     )
 }

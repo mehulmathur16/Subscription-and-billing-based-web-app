@@ -6,6 +6,7 @@ import Login from './components/Login';
 import Register from './components/Register';
 import MonthlyPlans from './components/MonthlyPlans';
 import YearlyPlans from './components/YearlyPlans';
+import PaymentScreen from './components/PaymentScreen';
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
@@ -17,6 +18,7 @@ const Routing = () => {
         <Route path="/register" element={<Register />} />
         <Route path="/monthly-plans" element={<MonthlyPlans />} />
         <Route path="/yearly-plans" element={<YearlyPlans />} />
+        <Route path="/payment" element={<PaymentScreen />} />
       </Routes>
     </Router>
   )

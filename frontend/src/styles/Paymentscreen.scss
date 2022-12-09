@@ -1,0 +1,131 @@
+.payment-screen {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #034694;
+    height: 100vh;
+
+    &__container {
+        display: flex;
+        flex-direction: row;
+        border-radius: 1rem;
+        border: none;
+        background-color: white;
+        width: 60%;
+    }
+
+    &__card-section {
+        width: 60%;
+        padding: 2rem;
+    }
+
+    &__card-section-heading {
+        font-size: 1.6rem;
+        font-weight: 500;
+    }
+    
+    &__card-section-subheading {
+        font-size: 0.85rem;
+        padding: 0.3rem 0;
+        color: gray;
+    }
+
+    &__confirm-button {
+        padding: 0.7rem;
+        font-size: 0.8rem;
+        background: #034694;
+        color: white;
+        border: none;
+        border-radius: 0.2rem;
+        margin-top: 1rem;
+        cursor: pointer;
+    }
+
+    &__card-input {
+        display: flex;
+        flex-direction: row;
+        margin: 1.25rem 0;
+    }
+
+    &__card-logo {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-top-left-radius: 0.3rem;
+        border-bottom-left-radius: 0.3rem;
+        width: 7%;
+        border: 1.5px lightgray;
+        border-style: solid;
+        border-right: none;
+    }
+
+    &__input-style {
+        &:active, &:focus-visible {
+            outline : none;
+        }
+
+        border: none;
+        border: 1.5px lightgray;
+        border-style: solid;
+        padding: 0.5rem 0.3rem;
+        font-size: 0.75rem;
+        font-family: 'Segoe UI';
+    }
+
+    &__card-number-input {
+        width: 50%;
+        border-right: none;
+        border-left: none;
+    }
+
+    &__expiry-date-input {
+        width: 7%;
+        border-left: none;
+        border-right: none;
+    }
+
+    &__cvv-input {
+        width: 8%;
+        border-left: none;
+        border-top-right-radius: 0.3rem;
+        border-bottom-right-radius: 0.3rem;
+    }
+
+    &__order-summary {
+        display: flex;
+        flex-direction: column;
+        width: 40%;
+        background: #F8F8F8;
+        padding: 2rem;
+        border-top-right-radius: 1rem;
+        border-bottom-right-radius: 1rem;
+    }
+
+    &__order-heading {
+        font-size: 1.2rem;
+        font-weight: 500;
+        padding-bottom: 2rem;
+    }
+
+    &__order-sections {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    &__metric-key {
+        font-size: 0.8rem;
+        font-weight: 500;    
+    }
+
+    
+    &__metric-value {
+        font-size: 0.8rem;
+        font-weight: 650;    
+    }
+
+    &__line {
+        width: 100%;
+        border: 0.1px solid lightgray;
+        background: lightgray;
+    }
+}
