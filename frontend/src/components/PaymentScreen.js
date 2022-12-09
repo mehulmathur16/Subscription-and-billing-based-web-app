@@ -3,7 +3,8 @@ import '../styles/Paymentscreen.scss';
 
 import { BsCreditCard2Back } from 'react-icons/bs';
 
-const PaymentScreen = () => {
+const PaymentScreen = ({ activePlanName, activePlanPrice, typeOfPlan }) => {
+
     return (
         <div className='payment-screen'>
             <div className='payment-screen__container'>
@@ -38,7 +39,7 @@ const PaymentScreen = () => {
                             Plan Name
                         </div>
                         <div className='payment-screen__metric-value'>
-                            Basic
+                            {activePlanName}
                         </div>
                     </div>
 
@@ -49,7 +50,7 @@ const PaymentScreen = () => {
                             Billing Cycle
                         </div>
                         <div className='payment-screen__metric-value'>
-                            Monthly
+                            {typeOfPlan}
                         </div>
                     </div>
 
@@ -60,7 +61,7 @@ const PaymentScreen = () => {
                             Plan Price
                         </div>
                         <div className='payment-screen__metric-value'>
-                            &#8377;200/mo
+                            &#8377;{activePlanPrice}/{(typeOfPlan === "Monthly") ? 'mo' : 'yr'}
                         </div>
                     </div>
 

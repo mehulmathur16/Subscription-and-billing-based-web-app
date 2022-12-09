@@ -1,10 +1,35 @@
 import React from 'react';
+import { useNavigate } from "react-router-dom";
 import '../styles/Plans.scss';
 
-const MonthlyPlans = () => {
+const plansData = [
+    {
+        name: 'Mobile',
+        price: '100',
+    },
+    {
+        name: 'Basic',
+        price: '200',
+    },
+    {
+        name: 'Standard',
+        price: '500',
+    },
+    {
+        name: 'Premium',
+        price: '700',
+    },
+]
+
+const MonthlyPlans = ({ setactivePlanName, setactivePlanPrice, settypeOfPlan }) => {
+    const navigate = useNavigate();
+    settypeOfPlan('Monthly');
 
     const handleClick = (e, key) => {
         var allElements = document.getElementsByTagName("td");
+
+        setactivePlanName(plansData[key].name);
+        setactivePlanPrice(plansData[key].price);
 
         let count = 0;
 
@@ -53,7 +78,7 @@ const MonthlyPlans = () => {
                             <span onClick={() => {
                                 document.getElementsByTagName("span")[0].classList.remove("plans-screen__toggle-button--active");
                                 document.getElementsByTagName("span")[1].classList.add("plans-screen__toggle-button--active");
-                                window.location.href = '/yearly-plans';
+                                navigate('/yearly-plans');
                             }}>Yearly</span>
                         </button>
                         <td className='plans-screen__headers plans-screen__headers--active' key={0} onClick={event => handleClick(event, 0)}>Mobile</td>
@@ -121,7 +146,7 @@ const MonthlyPlans = () => {
             </div>
 
             <buttton className='plans-screen__next-button' onClick={() => {
-                window.location.href = '/payment';
+                navigate('/payment');
             }}>Next</buttton>
         </div >
     )
