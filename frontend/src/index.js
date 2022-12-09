@@ -4,6 +4,8 @@ import './index.css';
 
 import Login from './components/Login';
 import Register from './components/Register';
+import MonthlyPlans from './components/MonthlyPlans';
+import YearlyPlans from './components/YearlyPlans';
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
@@ -11,8 +13,10 @@ const Routing = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Login buttonName="Login" footer="New to MyApp?" />} />
+        <Route path="/" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/monthly-plans" element={<MonthlyPlans />} />
+        <Route path="/yearly-plans" element={<YearlyPlans />} />
       </Routes>
     </Router>
   )

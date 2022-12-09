@@ -1,0 +1,82 @@
+.plans-screen {
+    display: flex;
+    flex-direction: center;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    table {
+        border-collapse: collapse;
+        border: none;
+    }
+
+    tr {
+        border-bottom: 0.5px solid gray;
+    }
+
+    td {
+        padding: 1rem;
+        font-size: 0.8rem;
+        font-weight: 500;
+        font-family: 'Segoe UI';
+        text-align: center;
+    }
+
+    &__active-column {
+        color: #0346B0;
+        font-weight: 640;
+    }
+
+    &__heading {
+        font-size: 1.5rem;
+        font-weight: 500;
+        padding: 2rem;
+    }
+
+    &__plan-attribute {
+        padding-right: 10rem !important;
+        text-align: inherit !important;
+    }
+
+    &__next-button {
+        padding: 0.7rem 10rem;
+        font-size: 0.8rem;
+        background: #034694;
+        color: white;
+        border: none;
+        border-radius: 0.2rem;
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+        cursor: pointer;
+    }
+
+    &__headers {
+        background: #B9D9EB;
+        color: white;
+        border-right: 10px solid white;
+        cursor: pointer;
+
+        &--active {
+            background: #034694;
+        }
+    }
+
+    &__toggle-button {
+        padding: 0.8rem;
+        border-radius: 2rem;
+        border: none;
+        background: #034694;
+        color: white;
+        font-weight: 500;
+        font-size: 0.8rem;
+        font-family: 'Segoe UI';
+        cursor: pointer;
+
+        &--active {
+            background-color: white;
+            color: #034694;
+            border-radius: 2rem;
+            padding: 0.4rem;
+        }
+    }
+}
