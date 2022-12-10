@@ -128,4 +128,16 @@
         border: 0.1px solid lightgray;
         background: lightgray;
     }
+
+    &__FormGroup {
+        &:active, &:focus-visible {
+            outline : none;
+        }
+
+        border: none;
+        border: 1.5px lightgray;
+        border-style: solid;
+        border-radius: 0.3rem;
+        margin: 1.25rem 0;
+    }
 }
