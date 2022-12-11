@@ -76,56 +76,59 @@ app.post('/sub', async (req, res) => {
 
     console.log("Hello");
 
-    const customer = await stripe.customers.create({
+    await stripe.customers.create({
         payment_method: payment_method,
         email: email,
         invoice_settings: {
             default_payment_method: payment_method,
         },
+    }).then(async (customer) => {
+        console.log(customer);
+
+        await stripe.subscriptions.create({
+            customer: customer.id,
+            description: chosen_plan + " Subscription Creation",
+            items: [{ plan: allPlans[chosen_plan] }],
+            expand: ['latest_invoice.payment_intent']
+        }).then(async (subscription) => {
+            console.log(subscription);
+
+            const status = subscription['latest_invoice']['payment_intent']['status']
+            const client_secret = subscription['latest_invoice']['payment_intent']['client_secret']
+
+            var { id, current_period_start, current_period_end } = subscription;
+
+            console.log("ID : ", id);
+
+            const subscriptionData = {
+                id,
+                email,
+                plan_name,
+                plan_type,
+                devices,
+                price,
+                'start_date': current_period_start,
+                'end_date': current_period_end,
+            }
+
+            if (change_plan_active === true) {
+                await db.collection('subscriptions').find({ email }).toArray()
+                    .then(async (userPlanDetails) => {
+                        const { id } = userPlanDetails[0];
+
+                        await stripe.subscriptions.del(id);
+                        await db.collection('subscriptions').deleteMany({ email: email });
+                    });
+            }
+
+            if (status === 'succeeded') {
+                console.log("Subscription Success Backend");
+                await db.collection('subscriptions').insertOne(subscriptionData);
+            }
+
+            res.status(200).send({ client_secret: client_secret, status: status });
+        })
     });
-
-    console.log(customer);
-
-    const subscription = await stripe.subscriptions.create({
-        customer: customer.id,
-        description: chosen_plan + " Subscription Creation",
-        items: [{ plan: allPlans[chosen_plan] }],
-        expand: ['latest_invoice.payment_intent']
-    });
-
-    console.log(subscription);
-
-    const status = subscription['latest_invoice']['payment_intent']['status']
-    const client_secret = subscription['latest_invoice']['payment_intent']['client_secret']
-
-    var { id, current_period_start, current_period_end } = subscription;
-
-    console.log("ID : ", id);
-
-    const subscriptionData = {
-        id,
-        email,
-        plan_name,
-        plan_type,
-        devices,
-        price,
-        'start_date': current_period_start,
-        'end_date': current_period_end,
-    }
-
-    if (change_plan_active === true) {
-        const userPlanDetails = await db.collection('subscriptions').find({ email }).toArray();
-        const { id } = userPlanDetails[0];
-
-        await stripe.subscriptions.del(id);
-        await db.collection('subscriptions').deleteMany({ email: email });
-    }
-
-    if (status === 'succeeded') {
-        await db.collection('subscriptions').insertOne(subscriptionData);
-    }
-
-    res.json({ 'client_secret': client_secret, 'status': status });
 })
 
 app.post('/currentUserPlanDetails', async (req, res) => {
