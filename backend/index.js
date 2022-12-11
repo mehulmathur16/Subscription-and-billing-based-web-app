@@ -57,14 +57,16 @@ app.post("/register", async (req, res) => {
 
 app.post("/login", async (req, res) => {
     let passwordHash = crypto.createHash('sha256').update(req.body.password).digest('hex');
-    const allUsers = await db.collection('users').find({ email: req.body.email, password: passwordHash }).toArray();
 
-    if (allUsers.length === 0) {
-        res.status(200).send("User Not Found!");
-    }
-    else {
-        res.status(200).send({ success: true, email: req.body.email });
-    }
+    await db.collection('users').find({ email: req.body.email, password: passwordHash }).toArray()
+        .then((allUsers) => {
+            if (allUsers.length === 0) {
+                res.status(200).send("User Not Found!");
+            }
+            else {
+                res.status(200).send({ success: true, email: req.body.email });
+            }
+        });
 });
 
 app.post('/sub', async (req, res) => {
@@ -72,91 +74,95 @@ app.post('/sub', async (req, res) => {
 
     const [plan_name, plan_type] = chosen_plan.split('-')
 
-    const customer = await stripe.customers.create({
+    await stripe.customers.create({
         payment_method: payment_method,
         email: email,
         invoice_settings: {
             default_payment_method: payment_method,
         },
+    }).then(async (customer) => {
+        await stripe.subscriptions.create({
+            customer: customer.id,
+            description: chosen_plan + " Subscription Creation",
+            items: [{ plan: allPlans[chosen_plan] }],
+            expand: ['latest_invoice.payment_intent']
+        }).then(async (subscription) => {
+            const status = subscription['latest_invoice']['payment_intent']['status']
+            const client_secret = subscription['latest_invoice']['payment_intent']['client_secret']
+
+            var { id, current_period_start, current_period_end } = subscription;
+
+            console.log("ID : ", id);
+
+            const subscriptionData = {
+                id,
+                email,
+                plan_name,
+                plan_type,
+                devices,
+                price,
+                'start_date': current_period_start,
+                'end_date': current_period_end,
+            }
+
+            if (change_plan_active === true) {
+                await db.collection('subscriptions').find({ email }).toArray()
+                    .then(async (userPlanDetails) => {
+                        const { id } = userPlanDetails[0];
+
+                        await stripe.subscriptions.del(id);
+                        await db.collection('subscriptions').deleteMany({ email: email });
+                    });
+            }
+
+            if (status === 'succeeded') {
+                await db.collection('subscriptions').insertOne(subscriptionData);
+            }
+
+            res.json({ 'client_secret': client_secret, 'status': status });
+        });
     });
-
-    const subscription = await stripe.subscriptions.create({
-        customer: customer.id,
-        description: chosen_plan + " Subscription Creation",
-        items: [{ plan: allPlans[chosen_plan] }],
-        expand: ['latest_invoice.payment_intent']
-    });
-
-    console.log(subscription);
-
-    const status = subscription['latest_invoice']['payment_intent']['status']
-    const client_secret = subscription['latest_invoice']['payment_intent']['client_secret']
-
-    var { id, current_period_start, current_period_end } = subscription;
-
-    console.log("ID : ", id);
-
-    const subscriptionData = {
-        id,
-        email,
-        plan_name,
-        plan_type,
-        devices,
-        price,
-        'start_date': current_period_start,
-        'end_date': current_period_end,
-    }
-
-    if (change_plan_active === true) {
-        const userPlanDetails = await db.collection('subscriptions').find({ email }).toArray();
-        const { id } = userPlanDetails[0];
-
-        await stripe.subscriptions.del(id);
-        await db.collection('subscriptions').deleteMany({ email: email });
-    }
-
-    if (status === 'succeeded') {
-        await db.collection('subscriptions').insertOne(subscriptionData);
-    }
-
-    res.json({ 'client_secret': client_secret, 'status': status });
 })
 
 app.post('/currentUserPlanDetails', async (req, res) => {
     const { email } = req.body;
 
-    const userPlanDetails = await db.collection('subscriptions').find({ email }).toArray();
-
-    res.status(200).send({ userPlanDetails: userPlanDetails[0] });
+    await db.collection('subscriptions').find({ email }).toArray()
+        .then((userPlanDetails) => {
+            res.status(200).send({ userPlanDetails: userPlanDetails[0] });
+        });
 })
 
 app.post('/cancel-subscription', async (req, res) => {
     const { email } = req.body;
 
-    const userPlanDetails = await db.collection('subscriptions').find({ email }).toArray();
-    const { id } = userPlanDetails[0];
+    await db.collection('subscriptions').find({ email }).toArray()
+        .then(async (userPlanDetails) => {
+            const { id } = userPlanDetails[0];
 
-    await stripe.subscriptions.del(id);
-    await db.collection('subscriptions').deleteMany({ email: email });
+            await stripe.subscriptions.del(id);
+            await db.collection('subscriptions').deleteMany({ email: email });
 
-    res.status(200).send({ success: true });
+            res.status(200).send({ success: true });
+        });
 })
 
 // API to cancel all subscriptions
 app.post('/cancelAllSubscriptions', async (req, res) => {
-    var subscriptions = await stripe.subscriptions.list({
+    await stripe.subscriptions.list({
         limit: 20,
-    });
+    })
+        .then(async (subscriptions) => {
+            subscriptions = subscriptions['data'];
 
-    subscriptions = subscriptions['data'];
+            for (let i = 0; i < subscriptions.length; i++) {
+                const curr = subscriptions[i];
+                const { id } = curr;
+                await stripe.subscriptions.del(id);
+            }
 
-    for (let i = 0; i < subscriptions.length; i++) {
-        const curr = subscriptions[i];
-        const { id } = curr;
-        await stripe.subscriptions.del(id);
-    }
-
-    res.status(200).send({ success: true, subscriptions: subscriptions });
+            res.status(200).send({ success: true, subscriptions: subscriptions });
+        });
 })
 
 app.get('/getTableData', async (req, res) => {
