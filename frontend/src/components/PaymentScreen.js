@@ -64,6 +64,7 @@ const PaymentScreen = ({ selectedPlan, email, changePlanActive, setChangePlanAct
         if (result.error) {
             console.log(result.error.message);
         } else {
+            console.log(`${process.env.REACT_APP_BACKEND_DEPLOYMENT_KEY}sub`);
             const res = await axios.post(`${process.env.REACT_APP_BACKEND_DEPLOYMENT_KEY}sub`, { 'payment_method': result.paymentMethod.id, 'email': email, 'chosen_plan': chosenPlan, 'devices': devices, 'price': activePlanPrice, 'change_plan_active': changePlanActive });
             const { client_secret, status } = res.data;
 
