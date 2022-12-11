@@ -8,24 +8,24 @@ require('dotenv').config();
 const Stripe = require('stripe');
 const stripe = Stripe(process.env.STRIPE_SECRET_TEST);
 
-var mongoose = require('mongoose');
-mongoose.set('strictQuery', true);
+// var mongoose = require('mongoose');
+// mongoose.set('strictQuery', true);
 
-mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true }, (err) => {
+// mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true }, (err) => {
 
-    if (!err) {
-        console.log("MongoDB connected successfully.");
-    }
-    else {
-        console.log("Error in DB connection : ", err);
-    }
-})
+//     if (!err) {
+//         console.log("MongoDB connected successfully.");
+//     }
+//     else {
+//         console.log("Error in DB connection : ", err);
+//     }
+// })
 
-var db = mongoose.connection;
-db.on('error', console.log.bind(console, "connection error"));
-db.once('open', function (callback) {
-    console.log("connection succeeded");
-})
+// var db = mongoose.connection;
+// db.on('error', console.log.bind(console, "connection error"));
+// db.once('open', function (callback) {
+//     console.log("connection succeeded");
+// })
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
