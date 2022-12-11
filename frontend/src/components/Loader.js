@@ -3,7 +3,7 @@ import { ThreeCircles } from 'react-loader-spinner';
 
 const Loader = () => {
     return (
-        <div style={{ top: '40vh', left: '45vw', position: 'absolute' }}>
+        <div style={{ top: '40vh', left: '45vw', position: 'absolute', zIndex: '1' }}>
             <ThreeCircles
                 height="80"
                 width="80"
