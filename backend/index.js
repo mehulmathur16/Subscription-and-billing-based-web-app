@@ -9,6 +9,7 @@ const Stripe = require('stripe');
 const stripe = Stripe(process.env.STRIPE_SECRET_TEST);
 
 var mongoose = require('mongoose');
+mongoose.set('strictQuery', true);
 
 mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true }, (err) => {
 
