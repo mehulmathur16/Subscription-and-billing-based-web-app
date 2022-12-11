@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from '../axios';
-import { NotificationContainer, NotificationManager } from 'react-notifications';
+import { NotificationManager } from 'react-notifications';
 import { useNavigate } from "react-router-dom";
 import { getDate } from '../App';
 import Loader from './Loader';
@@ -97,8 +97,6 @@ const CurrentPlan = ({ activePlan, setActivePlan, email, setChangePlanActive }) 
                             Your subscription has started on {getDate(activePlan.start_date)} and will auto renew on {getDate(activePlan.end_date)}.
                         </div>
                     </div>
-
-                    <NotificationContainer />
                 </div>
                 :
                 null

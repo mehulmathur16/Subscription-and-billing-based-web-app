@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import '../styles/Currentplan.scss';
 
@@ -6,6 +6,12 @@ import { getDate } from '../App';
 
 const CancelPlan = ({ activePlan, setActivePlan, email }) => {
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!email)
+            navigate('/')
+    }, [])
+
 
     return (
         <>

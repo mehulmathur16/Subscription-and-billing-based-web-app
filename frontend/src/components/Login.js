@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from '../axios';
 import { useNavigate } from "react-router-dom";
-import { NotificationContainer, NotificationManager } from 'react-notifications';
+import { NotificationManager } from 'react-notifications';
 import Loader from './Loader';
 
 import "../styles/Loginscreen.scss";
@@ -78,8 +78,6 @@ const Login = ({ setLoggedInUser }) => {
                     </div>
                 </div>
             </div>
-
-            <NotificationContainer />
         </>
     )
 }

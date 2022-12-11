@@ -1,19 +1,27 @@
 import React, { useState } from 'react';
-import './index.css';
-
-import 'react-notifications/lib/notifications.css';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { NotificationContainer } from 'react-notifications';
 
 import Login from './components/Login';
 import Register from './components/Register';
 import MonthlyPlans from './components/MonthlyPlans';
 import YearlyPlans from './components/YearlyPlans';
-import PaymentScreen from './components/PaymentScreen';
 import CurrentPlan from './components/CurrentPlan';
 import CancelPlan from './components/CancelPlan';
 import StripeContainer from './components/StripeContainer';
 
+import './index.css';
+import 'react-notifications/lib/notifications.css';
 
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+export function getDate(UNIX_timestamp) {
+  var a = new Date(UNIX_timestamp * 1000);
+  var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  var year = a.getFullYear();
+  var month = months[a.getMonth()];
+  var date = a.getDate();
+  var time = date + ' ' + month + ', ' + year;
+  return time;
+}
 
 const Routing = ({
   activePlan, setActivePlan,
@@ -50,27 +58,20 @@ function App() {
   const [changePlanActive, setChangePlanActive] = useState(false);
 
   return (
-    <Routing
-      selectedPlan={selectedPlan}
-      setSelectedPlan={setSelectedPlan}
-      activePlan={activePlan}
-      setActivePlan={setActivePlan}
-      loggedInUser={loggedInUser}
-      setLoggedInUser={setLoggedInUser}
-      changePlanActive={changePlanActive}
-      setChangePlanActive={setChangePlanActive}
-    />
+    <>
+      <Routing
+        selectedPlan={selectedPlan}
+        setSelectedPlan={setSelectedPlan}
+        activePlan={activePlan}
+        setActivePlan={setActivePlan}
+        loggedInUser={loggedInUser}
+        setLoggedInUser={setLoggedInUser}
+        changePlanActive={changePlanActive}
+        setChangePlanActive={setChangePlanActive}
+      />
+      <NotificationContainer />
+    </>
   );
-}
-
-export function getDate(UNIX_timestamp) {
-  var a = new Date(UNIX_timestamp * 1000);
-  var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-  var year = a.getFullYear();
-  var month = months[a.getMonth()];
-  var date = a.getDate();
-  var time = date + ' ' + month + ', ' + year;
-  return time;
 }
 
 export default App;

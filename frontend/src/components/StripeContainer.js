@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
@@ -10,9 +10,13 @@ const stripeTestPromise = loadStripe(PUBLIC_KEY);
 const StripeContainer = ({ selectedPlan, email, changePlanActive, setChangePlanActive }) => {
     const navigate = useNavigate();
 
+    useEffect(() => {
+        if (!email)
+            navigate('/')
+    }, [])
+
     return (
         <>
-            {(email) ? null : navigate('/')}
             <Elements stripe={stripeTestPromise}>
                 <PaymentScreen selectedPlan={selectedPlan} email={email} changePlanActive={changePlanActive} setChangePlanActive={setChangePlanActive} />
             </Elements>

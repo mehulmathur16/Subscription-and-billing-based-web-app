@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import axios from '../axios';
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js"
-import { NotificationContainer, NotificationManager } from 'react-notifications';
+import { NotificationManager } from 'react-notifications';
 import Loader from './Loader';
 
 import '../styles/Paymentscreen.scss';
@@ -168,8 +168,6 @@ const PaymentScreen = ({ selectedPlan, email, changePlanActive, setChangePlanAct
                         <hr className='payment-screen__line' />
                     </div>
                 </div>
-
-                <NotificationContainer />
             </div>
         </>
     )

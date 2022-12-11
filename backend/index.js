@@ -142,7 +142,7 @@ app.post('/cancel-subscription', async (req, res) => {
 })
 
 // API to cancel all subscriptions
-app.post('/cancell', async (req, res) => {
+app.post('/cancelAllSubscriptions', async (req, res) => {
     var subscriptions = await stripe.subscriptions.list({
         limit: 20,
     });

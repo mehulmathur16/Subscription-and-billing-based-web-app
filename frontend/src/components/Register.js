@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import axios from '../axios';
 import { useNavigate } from "react-router-dom";
-import { NotificationContainer, NotificationManager } from 'react-notifications';
+import { NotificationManager } from 'react-notifications';
 
 import "../styles/Loginscreen.scss";
 import Loader from './Loader';
@@ -79,8 +79,6 @@ const Register = () => {
                         }}> Login </span>
                     </div>
                 </div>
-
-                <NotificationContainer />
             </div>
         </>
     )
