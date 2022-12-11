@@ -160,8 +160,10 @@ app.post('/cancelAllSubscriptions', async (req, res) => {
 })
 
 app.get('/getTableData', async (req, res) => {
-    const tableData = await db.collection('plans').find({}).toArray();
-    res.status(200).send({ tableData });
+    await db.collection('plans').find({}).toArray()
+        .then((tableData) => {
+            res.status(200).send({ tableData });
+        });
 })
 
 app.get('/', function (req, res) {
