@@ -77,12 +77,11 @@ app.post('/sub', async (req, res) => {
     console.log("Hello");
 
     await stripe.customers.create({
-        // "payment_method": payment_method,
-        // "email": email,
-        // "invoice_settings": {
-        //     "default_payment_method": payment_method,
-        // },
-        description: "New Customer",
+        "payment_method": payment_method,
+        "email": email,
+        "invoice_settings": {
+            "default_payment_method": payment_method,
+        },
     }).then(async (customer) => {
         console.log(customer);
 
