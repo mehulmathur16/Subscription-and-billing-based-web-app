@@ -75,15 +75,14 @@ app.post('/sub', async (req, res) => {
     const [plan_name, plan_type] = chosen_plan.split('-')
 
     console.log("Hello");
-    console.log(payment_method);
-    console.log(email);
 
     await stripe.customers.create({
-        "payment_method": payment_method,
-        "email": email,
-        "invoice_settings": {
-            "default_payment_method": payment_method,
-        },
+        // "payment_method": payment_method,
+        // "email": email,
+        // "invoice_settings": {
+        //     "default_payment_method": payment_method,
+        // },
+        description: "New Customer",
     }).then(async (customer) => {
         console.log(customer);
 
